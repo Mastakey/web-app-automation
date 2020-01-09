@@ -45,14 +45,6 @@ exports.generateNavBar = () => {
   return code;
 };
 
-exports.login = () => {};
-
-exports.home = () => {};
-
 exports.reducers = () => {};
 
 exports.actions = () => {};
-
-exports.generateFunctions = (bigName, smallName) => {
-  return functionStr(bigName, smallName);
-};

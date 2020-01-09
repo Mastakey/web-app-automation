@@ -7,7 +7,7 @@ exports.createField = async (req, res) => {
     description: req.body.description,
     type: req.body.type,
     options: req.body.options,
-    appId: req.body.appId,
+    objId: req.body.objId,
     username: req.user.username,
     createdAt: date.toUTCString(),
     createdAtTimestamp: date.getTime()
@@ -38,10 +38,10 @@ exports.getFields = async (req, res) => {
   return res.json(fields);
 };
 
-exports.getFieldsByApp = async (req, res) => {
+exports.getFieldsByObj = async (req, res) => {
   let allFields = await db
     .collection("field")
-    .where("appId", "==", req.params.appId)
+    .where("objId", "==", req.params.objId)
     .orderBy("createdAtTimestamp", "desc")
     .get();
   let fields = [];
@@ -77,7 +77,7 @@ exports.editField = async (req, res) => {
     description: req.body.description,
     type: req.body.type,
     options: req.body.options,
-    appId: req.body.appId,
+    objId: req.body.objId,
     username: req.user.username,
     updatedAt: date.toUTCString(),
     updatedAtTimestamp: date.getTime()

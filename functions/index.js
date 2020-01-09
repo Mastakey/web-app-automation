@@ -18,19 +18,37 @@ const {
   getAppById,
   editApp,
   deleteApp
-} = require("./handlers/app");
+} = require("./handlers/app/app_controller");
 
 const {
   createField,
   getFields,
   getFieldById,
-  getFieldsByApp,
+  getFieldsByObj,
   editField,
   deleteField
 } = require("./handlers/field");
 
-const { createCode, getCodeByApp } = require("./handlers/code");
+const {
+  createObj,
+  getObjs,
+  getObjById,
+  getObjsByApp,
+  editObj,
+  deleteObj
+} = require("./handlers/object");
 
+const {
+  createCode,
+  getCodes,
+  getCodeById,
+  editCode,
+  deleteCode,
+  createCodeService,
+  createCodeController,
+  getCodesByObjId,
+  getCodesByAppId
+} = require("./handlers/code/code_controller");
 app.use(cors());
 
 //App routes
@@ -43,18 +61,31 @@ app.delete("/app/:appId", FBAuth, deleteApp);
 //Workflow
 //Data
 //Object
+app.post("/obj", FBAuth, createObj);
+app.get("/obj", FBAuth, getObjs);
+app.get("/obj/:objId", FBAuth, getObjById);
+app.get("/app/:appId/obj", FBAuth, getObjsByApp);
+app.put("/obj/:objId", FBAuth, editObj);
+app.delete("/obj/:objId", FBAuth, deleteObj);
 
 //Fields
 app.post("/field", FBAuth, createField);
 app.get("/field", FBAuth, getFields);
 app.get("/field/:fieldId", FBAuth, getFieldById);
-app.get("/app/:appId/field", FBAuth, getFieldsByApp);
+app.get("/obj/:objId/field", FBAuth, getFieldsByObj);
 app.put("/field/:fieldId", FBAuth, editField);
 app.delete("/field/:fieldId", FBAuth, deleteField);
 
 //Code
 app.post("/code", FBAuth, createCode);
-app.get("/app/:appId/code", FBAuth, getCodeByApp);
+app.get("/code", FBAuth, getCodes);
+app.get("/code/:codeId", FBAuth, getCodeById);
+app.post("/code/service", FBAuth, createCodeService);
+app.post("/code/controller", FBAuth, createCodeController);
+app.get("/obj/:objId/code", FBAuth, getCodesByObjId);
+app.get("/app/:appId/code", FBAuth, getCodesByAppId);
+app.put("/code/:codeId", FBAuth, editCode);
+app.delete("/code/:codeId", FBAuth, deleteCode);
 //Form
 //Rules
 //Roles

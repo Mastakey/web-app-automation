@@ -21,7 +21,7 @@ let login = async function() {
   return "";
 };
 
-let createField = async function() {
+let createObject = async function() {
   try {
     let res = await axios.post(apiUrl + "/login", {
       email: "user5@email.com",
@@ -32,22 +32,22 @@ let createField = async function() {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`
     };
-    let fieldRes = await axios.post(
-      apiUrl + "/field",
+    let objRes = await axios.post(
+      apiUrl + "/obj",
       {
-        name: "new Field 1",
-        description: "just a new field",
+        name: "new Object 1",
+        description: "just a new obj",
         type: "text",
-        objId: "xxx",
+        appId: "xxx",
         options: {}
       },
       { headers: headers }
     );
     //console.log(res);
-    console.log(fieldRes.status);
-    console.log(fieldRes.statusText);
-    console.log(fieldRes.data);
-    return fieldRes.data.id;
+    console.log(objRes.status);
+    console.log(objRes.statusText);
+    console.log(objRes.data);
+    return objRes.data.id;
   } catch (err) {
     //console.error(err);
     console.error(err.response.status);
@@ -56,13 +56,13 @@ let createField = async function() {
   }
 };
 
-let getFields = async function(headers) {
+let getObjects = async function(headers) {
   try {
-    let fieldRes = await axios.get(apiUrl + "/field", { headers: headers });
+    let objRes = await axios.get(apiUrl + "/obj", { headers: headers });
     //console.log(res);
-    console.log(fieldRes.status);
-    console.log(fieldRes.statusText);
-    console.log(fieldRes.data);
+    console.log(objRes.status);
+    console.log(objRes.statusText);
+    console.log(objRes.data);
   } catch (err) {
     //console.error(err);
     console.error(err.response.status);
@@ -71,15 +71,15 @@ let getFields = async function(headers) {
   }
 };
 
-let getFieldsByObj = async function(headers, id) {
+let getObjectsByApp = async function(headers, id) {
   try {
-    let fieldRes = await axios.get(apiUrl + "/obj/" + id + "/field", {
+    let objRes = await axios.get(apiUrl + "/app/" + id + "/obj", {
       headers: headers
     });
     //console.log(res);
-    console.log(fieldRes.status);
-    console.log(fieldRes.statusText);
-    console.log(fieldRes.data);
+    console.log(objRes.status);
+    console.log(objRes.statusText);
+    console.log(objRes.data);
   } catch (err) {
     //console.error(err);
     console.error(err.response.status);
@@ -88,15 +88,15 @@ let getFieldsByObj = async function(headers, id) {
   }
 };
 
-let getFieldById = async function(headers, id) {
+let getObjectById = async function(headers, id) {
   try {
-    let fieldRes = await axios.get(apiUrl + "/field/" + id, {
+    let objRes = await axios.get(apiUrl + "/obj/" + id, {
       headers: headers
     });
     //console.log(res);
-    console.log(fieldRes.status);
-    console.log(fieldRes.statusText);
-    console.log(fieldRes.data);
+    console.log(objRes.status);
+    console.log(objRes.statusText);
+    console.log(objRes.data);
   } catch (err) {
     //console.error(err);
     console.error(err.response.status);
@@ -105,15 +105,15 @@ let getFieldById = async function(headers, id) {
   }
 };
 
-let editField = async function(headers, id) {
+let editObject = async function(headers, id) {
   try {
-    let fieldRes = await axios.put(
-      apiUrl + "/field/" + id,
+    let objRes = await axios.put(
+      apiUrl + "/obj/" + id,
       {
-        name: "new Field 2",
-        description: "just a new field edited",
+        name: "new Object 2",
+        description: "just a new obj edited",
         type: "text",
-        objId: "xxx",
+        appId: "xxx",
         options: {}
       },
       {
@@ -121,9 +121,9 @@ let editField = async function(headers, id) {
       }
     );
     //console.log(res);
-    console.log(fieldRes.status);
-    console.log(fieldRes.statusText);
-    console.log(fieldRes.data);
+    console.log(objRes.status);
+    console.log(objRes.statusText);
+    console.log(objRes.data);
   } catch (err) {
     //console.error(err);
     console.error(err.response.status);
@@ -132,15 +132,15 @@ let editField = async function(headers, id) {
   }
 };
 
-let deleteField = async function(headers, id) {
+let deleteObject = async function(headers, id) {
   try {
-    let fieldRes = await axios.delete(apiUrl + "/field/" + id, {
+    let objRes = await axios.delete(apiUrl + "/obj/" + id, {
       headers: headers
     });
     //console.log(res);
-    console.log(fieldRes.status);
-    console.log(fieldRes.statusText);
-    console.log(fieldRes.data);
+    console.log(objRes.status);
+    console.log(objRes.statusText);
+    console.log(objRes.data);
   } catch (err) {
     //console.error(err);
     console.error(err.response.status);
@@ -152,20 +152,20 @@ let deleteField = async function(headers, id) {
 let run = async function() {
   console.log("Login");
   let headers = await login();
-  console.log("Create Field Run");
-  let id = await createField(headers);
-  console.log("Get Fields Run");
-  await getFields(headers);
+  console.log("Create Object Run");
+  let id = await createObject(headers);
+  console.log("Get Objects Run");
+  await getObjects(headers);
 
-  console.log("Get Fields by Obj Run");
-  await getFieldsByObj(headers, "xxx");
+  console.log("Get Objects by App Run");
+  await getObjectsByApp(headers, "xxx");
 
-  console.log("Edit Field Run");
-  await editField(headers, id);
-  console.log("Get Field By Id Run");
-  await getFieldById(headers, id);
-  console.log("Delete Field Run");
-  await deleteField(headers, id);
+  console.log("Edit Object Run");
+  await editObject(headers, id);
+  console.log("Get Object By Id Run");
+  await getObjectById(headers, id);
+  console.log("Delete Object Run");
+  await deleteObject(headers, id);
 };
 
 run();

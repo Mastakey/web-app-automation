@@ -21,7 +21,7 @@ let login = async function() {
   return "";
 };
 
-let createApp = async function() {
+let createCode = async function() {
   try {
     let res = await axios.post(apiUrl + "/login", {
       email: "user5@email.com",
@@ -32,96 +32,94 @@ let createApp = async function() {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`
     };
-    let appRes = await axios.post(
-      apiUrl + "/app",
+    let codeRes = await axios.post(
+      apiUrl + "/code",
       {
-        name: "new App 1",
-        description: "just a new app",
+        name: "new Code 1",
+        description: "just a new code",
+        type: "type value",
+    code: "code value",
+    objId: "objId value",
+    appId: "appId value",
         username: "user5"
       },
       { headers: headers }
     );
-    //console.log(res);
-    console.log(appRes.status);
-    console.log(appRes.statusText);
-    console.log(appRes.data);
-    return appRes.data.id;
+    console.log(codeRes.status);
+    console.log(codeRes.statusText);
+    console.log(codeRes.data);
+    return codeRes.data.id;
   } catch (err) {
-    //console.error(err);
     console.error(err.response.status);
     console.error(err.response.statusText);
     console.error(err.response.data);
   }
 };
 
-let getApps = async function(headers) {
+let getCodes = async function(headers) {
   try {
-    let appRes = await axios.get(apiUrl + "/app", { headers: headers });
-    //console.log(res);
-    console.log(appRes.status);
-    console.log(appRes.statusText);
-    console.log(appRes.data);
+    let codeRes = await axios.get(apiUrl + "/code", { headers: headers });
+    console.log(codeRes.status);
+    console.log(codeRes.statusText);
+    console.log(codeRes.data);
   } catch (err) {
-    //console.error(err);
     console.error(err.response.status);
     console.error(err.response.statusText);
     console.error(err.response.data);
   }
 };
 
-let getAppById = async function(headers, id) {
+let getCodeById = async function(headers, id) {
   try {
-    let appRes = await axios.get(apiUrl + "/app/"+id, {
+    let codeRes = await axios.get(apiUrl + "/code/" + id, {
       headers: headers
     });
-    //console.log(res);
-    console.log(appRes.status);
-    console.log(appRes.statusText);
-    console.log(appRes.data);
+    console.log(codeRes.status);
+    console.log(codeRes.statusText);
+    console.log(codeRes.data);
   } catch (err) {
-    //console.error(err);
     console.error(err.response.status);
     console.error(err.response.statusText);
     console.error(err.response.data);
   }
 };
 
-let editApp = async function(headers, id) {
+let editCode = async function(headers, id) {
   try {
-    let appRes = await axios.put(
-      apiUrl + "/app/"+id,
+    let codeRes = await axios.put(
+      apiUrl + "/code/" + id,
       {
-        name: "new App 2",
-        description: "just a new app edited",
-        apiUrl: "new url"
+        name: "new Code 2",
+        description: "just a new code edited",
+        type: "type value",
+    code: "code value",
+    objId: "objId value",
+    appId: "appId value",
+        username: "user5"
       },
       {
         headers: headers
       }
     );
-    //console.log(res);
-    console.log(appRes.status);
-    console.log(appRes.statusText);
-    console.log(appRes.data);
+    console.log(codeRes.status);
+    console.log(codeRes.statusText);
+    console.log(codeRes.data);
   } catch (err) {
-    //console.error(err);
     console.error(err.response.status);
     console.error(err.response.statusText);
     console.error(err.response.data);
   }
 };
 
-let deleteApp = async function(headers, id) {
+let deleteCode = async function(headers, id) {
   try {
-    let appRes = await axios.delete(apiUrl + "/app/"+id, {
+    let codeRes = await axios.delete(apiUrl + "/code/" + id, {
       headers: headers
     });
-    //console.log(res);
-    console.log(appRes.status);
-    console.log(appRes.statusText);
-    console.log(appRes.data);
+    console.log(codeRes.status);
+    console.log(codeRes.statusText);
+    console.log(codeRes.data);
   } catch (err) {
-    //console.error(err);
     console.error(err.response.status);
     console.error(err.response.statusText);
     console.error(err.response.data);
@@ -131,17 +129,17 @@ let deleteApp = async function(headers, id) {
 let run = async function() {
   console.log("Login");
   let headers = await login();
-  console.log("Create App Run");
-  let id = await createApp(headers);
-  console.log("Get Apps Run");
-  await getApps(headers);
-
-  console.log("Edit App Run");
-  await editApp(headers, id);
-  console.log("Get App By Id Run");
-  await getAppById(headers, id);
-  console.log("Delete App Run");
-  await deleteApp(headers, id);
+  console.log("Create Code Run");
+  let id = await createCode(headers);
+  console.log("Get Codes Run");
+  await getCodes(headers);
+  console.log("Get Code by Id Run");
+  await getCodeById(headers, id);
+  console.log("Edit Code Run");
+  await editCode(headers, id);
+  console.log("Delete Code Run");
+  await deleteCode(headers, id);
 };
 
 run();
+

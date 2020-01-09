@@ -6,6 +6,9 @@ exports.createObj = async (req, res) => {
     name: req.body.name,
     description: req.body.description,
     username: req.user.username,
+    type: req.body.type,
+    options: req.body.options,
+    appId: req.body.appId,
     createdAt: date.toUTCString(),
     createdAtTimestamp: date.getTime()
   };
@@ -35,6 +38,22 @@ exports.getObjs = async (req, res) => {
   return res.json(objs);
 };
 
+exports.getObjsByApp = async (req, res) => {
+  let allObjs = await db
+    .collection("obj")
+    .where("appId", "==", req.params.appId)
+    .orderBy("createdAtTimestamp", "desc")
+    .get();
+  let objs = [];
+  allObjs.forEach(doc => {
+    objs.push({
+      id: doc.id,
+      ...doc.data()
+    });
+  });
+  return res.json(objs);
+};
+
 exports.getObjById = async (req, res) => {
   try {
     let obj = await db
@@ -44,7 +63,7 @@ exports.getObjById = async (req, res) => {
     if (!obj.exists) {
       return res.status(404).json({ error: "Obj not found" });
     }
-    return res.json(obj.data());
+    return res.json({ ...obj.data(), id: obj.id });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err });
@@ -57,6 +76,9 @@ exports.editObj = async (req, res) => {
     name: req.body.name,
     description: req.body.description,
     username: req.user.username,
+    type: req.body.type,
+    options: req.body.options,
+    appId: req.body.appId,
     updatedAt: date.toUTCString(),
     updatedAtTimestamp: date.getTime()
   };

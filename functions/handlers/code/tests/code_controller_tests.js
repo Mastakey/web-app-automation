@@ -168,6 +168,150 @@ let createCodeController = async function(headers) {
   }
 };
 
+let createCodeRoute = async function(headers) {
+  try {
+    let codeRes = await axios.post(
+      apiUrl + "/code/route",
+      {
+        objId: ""
+      },
+      { headers: headers }
+    );
+    console.log(codeRes.status);
+    console.log(codeRes.statusText);
+    console.log(codeRes.data);
+    return codeRes.data.id;
+  } catch (err) {
+    console.error(err.response.status);
+    console.error(err.response.statusText);
+    console.error(err.response.data);
+  }
+};
+
+let createCodeUIReducerTest = async function(headers, appId) {
+  try {
+    let codeRes = await axios.post(
+      apiUrl + `/app/${appId}/code/ui/reducer`,
+      {},
+      { headers: headers }
+    );
+    console.log(codeRes.status);
+    console.log(codeRes.statusText);
+    console.log(codeRes.data);
+    return codeRes.data.id;
+  } catch (err) {
+    console.error(err.response.status);
+    console.error(err.response.statusText);
+    console.error(err.response.data);
+  }
+};
+
+let createCodeActionsTest = async function(headers, appId) {
+  try {
+    let codeRes = await axios.post(
+      apiUrl + `/app/${appId}/code/ui/actions`,
+      {},
+      { headers: headers }
+    );
+    console.log(codeRes.status);
+    console.log(codeRes.statusText);
+    console.log(codeRes.data);
+    return codeRes.data.id;
+  } catch (err) {
+    console.error(err.response.status);
+    console.error(err.response.statusText);
+    console.error(err.response.data);
+  }
+};
+
+let createCodePageRoutesTest = async function(headers, appId) {
+  try {
+    let codeRes = await axios.post(
+      apiUrl + `/app/${appId}/code/ui/routepages`,
+      {},
+      { headers: headers }
+    );
+    console.log(codeRes.status);
+    console.log(codeRes.statusText);
+    console.log(codeRes.data);
+    return codeRes.data.id;
+  } catch (err) {
+    console.error(err.response.status);
+    console.error(err.response.statusText);
+    console.error(err.response.data);
+  }
+};
+
+let createCodeCompsTest = async function(headers, appId) {
+  try {
+    let codeRes = await axios.post(
+      apiUrl + `/app/${appId}/code/ui/comps`,
+      {},
+      { headers: headers }
+    );
+    console.log(codeRes.status);
+    console.log(codeRes.statusText);
+    console.log(codeRes.data);
+    return codeRes.data.id;
+  } catch (err) {
+    console.error(err.response.status);
+    console.error(err.response.statusText);
+    console.error(err.response.data);
+  }
+};
+
+let createCodeAppjsTest = async function(headers, appId) {
+  try {
+    let codeRes = await axios.post(
+      apiUrl + `/app/${appId}/code/ui/appjs`,
+      {},
+      { headers: headers }
+    );
+    console.log(codeRes.status);
+    console.log(codeRes.statusText);
+    console.log(codeRes.data);
+    return codeRes.data.id;
+  } catch (err) {
+    console.error(err.response.status);
+    console.error(err.response.statusText);
+    console.error(err.response.data);
+  }
+};
+
+let deleteAllCodesByAppIdTest = async function(headers, appId) {
+  try {
+    let codeRes = await axios.delete(apiUrl + `/app/${appId}/code`, {
+      headers: headers
+    });
+    console.log(codeRes.status);
+    console.log(codeRes.statusText);
+    console.log(codeRes.data);
+    return codeRes.data.id;
+  } catch (err) {
+    console.error(err.response.status);
+    console.error(err.response.statusText);
+    console.error(err.response.data);
+  }
+};
+
+let createAllUIControllerTest = async function(headers, appId) {
+  try {
+    let codeRes = await axios.post(
+      apiUrl + `/app/${appId}/code/ui/all`,
+      {},
+      { headers: headers }
+    );
+    console.log(codeRes.status);
+    console.log(codeRes.statusText);
+    console.log(codeRes.data);
+    return codeRes.data.id;
+  } catch (err) {
+    console.error(err.response.status);
+    console.error(err.response.statusText);
+    console.error(err.response.data);
+  }
+};
+
 let run = async function() {
   console.log("Login");
   let headers = await login();
@@ -188,10 +332,30 @@ let run = async function() {
 let runUserFunctions = async function() {
   console.log("Login");
   let headers = await login();
+  console.log(headers);
   //console.log("Create Code Service Run");
   //await createCodeService(headers);
-  console.log("Craete Code Controller Run");
-  await createCodeController(headers);
+  //console.log("Craete Code Controller Run");
+  //await createCodeController(headers);
+  //console.log("Create Code Route Run");
+  //await createCodeRoute(headers);
+  const appId = "1mOfAE0RRpn356OU5pmg";
+  // console.log("Create Code UI Reducer Run");
+  // await createCodeUIReducerTest(headers, appId);
+  // console.log("Delete Codes");
+  // await deleteAllCodesByAppIdTest(headers, appId);
+  // console.log("Create Code Actions Run");
+  // await createCodeActionsTest(headers, appId);
+  // console.log("Create Code Page Routes Run");
+  // await createCodePageRoutesTest(headers, appId);
+  // console.log("Create Code Components Run");
+  // await createCodeCompsTest(headers, appId);
+  // console.log("Create Code Appjs Run");
+  // await createCodeAppjsTest(headers, appId);
+  // console.log("Delete all Code by AppId");
+  // await deleteAllCodesByAppIdTest(headers, appId);
+  console.log("Create all UI Code by AppId");
+  await createAllUIControllerTest(headers, appId);
 };
 
 runUserFunctions();

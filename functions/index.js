@@ -46,8 +46,16 @@ const {
   deleteCode,
   createCodeService,
   createCodeController,
+  createCodeRoute,
   getCodesByObjId,
-  getCodesByAppId
+  getCodesByAppId,
+  createReducerController,
+  createActionController,
+  createPageRoutesController,
+  createComponentController,
+  createAppjsController,
+  deleteAllCodesByAppIdController,
+  createAllUIController
 } = require("./handlers/code/code_controller");
 app.use(cors());
 
@@ -82,6 +90,14 @@ app.get("/code", FBAuth, getCodes);
 app.get("/code/:codeId", FBAuth, getCodeById);
 app.post("/code/service", FBAuth, createCodeService);
 app.post("/code/controller", FBAuth, createCodeController);
+app.post("/code/route", FBAuth, createCodeRoute);
+app.post("/app/:appId/code/ui/reducer", FBAuth, createReducerController);
+app.post("/app/:appId/code/ui/actions", FBAuth, createActionController);
+app.post("/app/:appId/code/ui/routepages", FBAuth, createPageRoutesController);
+app.post("/app/:appId/code/ui/comps", FBAuth, createComponentController);
+app.post("/app/:appId/code/ui/appjs", FBAuth, createAppjsController);
+app.post("/app/:appId/code/ui/all", FBAuth, createAllUIController);
+app.delete("/app/:appId/code", FBAuth, deleteAllCodesByAppIdController);
 app.get("/obj/:objId/code", FBAuth, getCodesByObjId);
 app.get("/app/:appId/code", FBAuth, getCodesByAppId);
 app.put("/code/:codeId", FBAuth, editCode);

@@ -16,7 +16,7 @@ exports.create${bigName} = async (req, res) => {
     return res.status(resp.status).json(resp.response);
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: "error on create${bigName}" });
+    return res.status(500).json(err);
   }
 };
 
@@ -26,7 +26,7 @@ exports.get${bigName}s = async (req, res) => {
     return res.status(resp.status).json(resp.response);
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: "error on get${bigName}s" });
+    return res.status(500).json(err);
   }
 };
 
@@ -40,7 +40,7 @@ exports.get${bigName}ById = async (req, res) => {
     return res.status(resp.status).json(resp.response);
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: "error on get${bigName}ById" });
+    return res.status(500).json(err);
   }
 };
 
@@ -54,7 +54,7 @@ exports.edit${bigName} = async (req, res) => {
     return res.status(resp.status).json(resp.response);
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: "error on edit${bigName}Service", message: err });
+    return res.status(500).json(err);
   }
 };
 
@@ -67,7 +67,7 @@ exports.delete${bigName} = async (req, res) => {
     return res.status(resp.status).json(resp.response);
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: "error on edit${bigName}Service" });
+    return res.status(500).json(err);
   }
 };
 `;

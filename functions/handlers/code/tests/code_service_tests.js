@@ -18,7 +18,13 @@ const {
   createCodeControllerService,
   createCodeRouteService,
   getCodesByObjIdService,
-  getCodesByAppIdService
+  getCodesByAppIdService,
+  createReducerService,
+  createPageRoutesService,
+  createActionService,
+  createComponentService,
+  createAppjsService,
+  deleteAllCodesByAppId
 } = require("../code_service");
 
 let createCodeTest = async () => {
@@ -210,7 +216,7 @@ let getCodesByAppIdRun = () => {
 
 let createCodeRouteServiceTest = async () => {
   const params = {
-    appId: "1mOfAE0RRpn356OU5pmg"
+    objId: "1mOfAE0RRpn356OU5pmg"
   };
   const user = {
     username: "user5"
@@ -224,4 +230,116 @@ let createCodeRouteServiceTest = async () => {
   }
 };
 
-createCodeRouteServiceTest();
+//createCodeRouteServiceTest();
+
+//reducer
+let createReducerServiceTest = async () => {
+  const params = {
+    appId: "1mOfAE0RRpn356OU5pmg"
+  };
+  const user = {
+    username: "user5"
+  };
+  try {
+    let resp = await createReducerService(db, params, user);
+    console.log(resp);
+    return resp.response.id;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//createReducerServiceTest();
+
+//routes
+let createPageRoutesServiceTest = async () => {
+  const params = {
+    appId: "1mOfAE0RRpn356OU5pmg"
+  };
+  const user = {
+    username: "user5"
+  };
+  try {
+    let resp = await createPageRoutesService(db, params, user);
+    console.log(resp);
+    return resp.response.id;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//createPageRoutesServiceTest();
+
+//actions
+let createActionServiceTest = async () => {
+  const params = {
+    appId: "1mOfAE0RRpn356OU5pmg"
+  };
+  const user = {
+    username: "user5"
+  };
+  try {
+    let resp = await createActionService(db, params, user);
+    console.log(resp);
+    return resp.response.id;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//createActionServiceTest();
+
+//components
+let createComponentServiceTest = async () => {
+  const params = {
+    appId: "1mOfAE0RRpn356OU5pmg"
+  };
+  const user = {
+    username: "user5"
+  };
+  try {
+    let resp = await createComponentService(db, params, user);
+    console.log(resp);
+    return resp.response.id;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//createComponentServiceTest();
+
+let createAppjsServiceTest = async () => {
+  const params = {
+    appId: "1mOfAE0RRpn356OU5pmg"
+  };
+  const user = {
+    username: "user5"
+  };
+  try {
+    let resp = await createAppjsService(db, params, user);
+    console.log(resp);
+    return resp.response.id;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//createAppjsServiceTest();
+
+let deleteAllCodesTest = async () => {
+  const params = {
+    appId: "1mOfAE0RRpn356OU5pmg"
+  };
+  const user = {
+    username: "user5"
+  };
+  try {
+    let resp = await deleteAllCodes(db, params, user);
+    console.log(resp);
+    return resp.response.id;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+deleteAllCodesTest();

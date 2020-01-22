@@ -1,26 +1,41 @@
 const { getFieldParams } = require("./util");
 
 exports.generateService = (bigName, smallName, fields) => {
-  const fieldParams = getFieldParams(
-    fields,
-    { prefix: "params.", tabLevel: 2, generateValues: false }
-  );
-  return `exports.create${bigName}Service = async (db, params, user) => {
-  let date = new Date();
-  const new${bigName} = {
-    name: params.name,
-    description: params.description,
-    username: user.username,
-    ${fieldParams},
-    createdAt: date.toUTCString(),
-    createdAtTimestamp: date.getTime()
-  };
+  const fieldParams = getFieldParams(fields, {
+    prefix: "params.",
+    tabLevel: 2,
+    generateValues: false
+  });
+  return `const { validateName } = require("./todo_validators");
+  
+  exports.create${bigName}Service = async (db, params, user) => {
   try {
+    let date = new Date();
+    const new${bigName} = {
+      name: params.name,
+      description: params.description,
+      username: user.username,
+      ${fieldParams},
+      createdAt: date.toUTCString(),
+      createdAtTimestamp: date.getTime()
+    };
+    //validation
+    let validationErrors = [];
+    //Name
+    const nameValidation = validateName(params.name);
+    if (!nameValidation.valid) {
+      validationErrors.push(nameValidation);
+    }
+    //Throw Error
+    if (validationErrors.length > 0) {
+      throw { error: validationErrors, function: "createTodoService" };
+    }
     let ${smallName} = await db.collection("${smallName}").add(new${bigName});
     let resp = new${bigName};
     resp.id = ${smallName}.id;
     return { status: 200, response: resp };
   } catch (err) {
+    err.function = "create${bigName}Service";
     throw err;
   }
 };
@@ -40,6 +55,7 @@ exports.get${bigName}sService = async (db, params, user) => {
     });
     return { status: 200, response: ${smallName}s };
   } catch (err) {
+    err.function = "get${bigName}sService";
     throw err;
   }
 };
@@ -55,21 +71,34 @@ exports.get${bigName}ByIdService = async (db, params, user) => {
     }
     return { status: 200, response: { ...${smallName}.data(), id: ${smallName}.id } };
   } catch (err) {
+    err.function = "get${bigName}ByIdService";
     throw err;
   }
 };
 
 exports.edit${bigName}Service = async (db, params, user) => {
-  let date = new Date();
-  const edit${bigName} = {
-    name: params.name,
-    description: params.description,
-    username: user.username,
-    ${fieldParams},
-    updatedAt: date.toUTCString(),
-    updatedAtTimestamp: date.getTime()
-  };
   try {
+    let date = new Date();
+    const edit${bigName} = {
+      name: params.name,
+      description: params.description,
+      username: user.username,
+      ${fieldParams},
+      updatedAt: date.toUTCString(),
+      updatedAtTimestamp: date.getTime()
+    };
+    //validation
+    let validationErrors = [];
+    //Name
+    const nameValidation = validateName(params.name);
+    if (!nameValidation.valid) {
+      validationErrors.push(nameValidation);
+    }
+    //Throw Error
+    if (validationErrors.length > 0) {
+      throw { error: validationErrors, function: "createTodoService" };
+    }
+  
     let ${smallName} = await db.doc(\`/${smallName}/\${params.${smallName}Id}\`).get();
     if (!${smallName}.exists) {
       return { status: 404, response: { error: "${smallName} not found" } };
@@ -77,6 +106,7 @@ exports.edit${bigName}Service = async (db, params, user) => {
     await ${smallName}.ref.update(edit${bigName});
     return { status: 200, response: edit${bigName} };
   } catch (err) {
+    err.function = "edit${bigName}Service";
     throw err;
   }
 };
@@ -91,6 +121,7 @@ exports.delete${bigName}Service = async (db, params, user) => {
     await ${smallName}.delete();
     return { status: 200, response: { id: doc.id, message: "${smallName} deleted" } };
   } catch (err) {
+    err.function = "delete${bigName}Service";
     throw err;
   }
 };`;
